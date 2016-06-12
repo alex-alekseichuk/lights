@@ -7,6 +7,9 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
+QT += core gui
+greaterThan(4, QT_MAJOR_VERSION): QT += widgets
+
 # Input
 HEADERS += main_window.h model.h
 SOURCES += main.cpp main_window.cpp model.cpp
