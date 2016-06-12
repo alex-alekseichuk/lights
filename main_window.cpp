@@ -1,4 +1,5 @@
-#include <QtWidgets>
+//#include <QtWidgets>
+#include <QtGui>
 #include "main_window.h"
 
 MainWindow::MainWindow() : model() {
