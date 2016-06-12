@@ -1,4 +1,10 @@
-#include <QApplication>
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+    #include <QApplication>
+#else
+    #include <QtGui/QApplication>
+#endif
+
 #include <QPushButton>
 
 #include "main_window.h"

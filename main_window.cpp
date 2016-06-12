@@ -1,8 +1,13 @@
-//#include <QtWidgets>
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
+
 #include "main_window.h"
 
-MainWindow::MainWindow() : model() {
+MainWindow::MainWindow() /*: model()*/ {
 	createActions();
 	createMenu();
 	createToolBars();
@@ -78,7 +83,7 @@ void MainWindow::createStatusBar()
 
 
 void MainWindow::newFile() {
-	model.blank();
+	//model.blank();
 }
 void MainWindow::openFile() {
 }
@@ -89,7 +94,7 @@ void MainWindow::saveAsFile() {
 
 
 void MainWindow::insertFrame() {
-	model.insertFrame();
+	//model.insertFrame();
 	// statusBar()->showMessage(tr("Frame inserted"), 2000);
 }
 

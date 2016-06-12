@@ -8,9 +8,10 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 QT += core gui
-greaterThan(4, QT_MAJOR_VERSION): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+#QT += widgets
 
 # Input
-HEADERS += main_window.h model.h
-SOURCES += main.cpp main_window.cpp model.cpp
+HEADERS += main_window.h
+SOURCES += main.cpp main_window.cpp
 RESOURCES += app.qrc
