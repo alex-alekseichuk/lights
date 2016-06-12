@@ -1,0 +1,6 @@
+lights
+lights.app
+*.o
+moc_*
+qrc_*
+*.swp
