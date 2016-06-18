@@ -2,7 +2,7 @@
 #define __MAIN_WINDOW_H__ 1
 
 #include <QMainWindow>
-//#include "model.h"
+#include "model.h"
 
 class QAction;
 class QMenu;
@@ -22,7 +22,7 @@ private slots:
 	void insertFrame();
 
 private:
-	//Model model;
+	Model model;
 	
 	void createActions();
 	void createMenu();

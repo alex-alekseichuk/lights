@@ -9,9 +9,8 @@ INCLUDEPATH += .
 
 QT += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-#QT += widgets
 
 # Input
-HEADERS += main_window.h
-SOURCES += main.cpp main_window.cpp
+HEADERS += main_window.h model.h frame_widget.h
+SOURCES += main.cpp main_window.cpp model.cpp frame_widget.cpp
 RESOURCES += app.qrc

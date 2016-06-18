@@ -7,13 +7,17 @@
 
 #include "main_window.h"
 
-MainWindow::MainWindow() /*: model()*/ {
+MainWindow::MainWindow() : model()
+{
 	createActions();
 	createMenu();
 	createToolBars();
 	createStatusBar();
 
 	setUnifiedTitleAndToolBarOnMac(true);
+
+    HQBoxLayout *layout = new HQBoxLayout();
+
 }
 
 void MainWindow::createActions() {
@@ -78,12 +82,12 @@ void MainWindow::createToolBars()
 
 void MainWindow::createStatusBar()
 {
-    //statusBar()->showMessage(tr("Ready"));
+    statusBar()->showMessage(tr("Ready"));
 }
 
 
 void MainWindow::newFile() {
-	//model.blank();
+	model.blank();
 }
 void MainWindow::openFile() {
 }
@@ -94,7 +98,7 @@ void MainWindow::saveAsFile() {
 
 
 void MainWindow::insertFrame() {
-	//model.insertFrame();
-	// statusBar()->showMessage(tr("Frame inserted"), 2000);
+	model.insertBlankFrame();
+	statusBar()->showMessage(tr("Frame inserted"), 2000);
 }
 

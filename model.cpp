@@ -2,37 +2,28 @@
 #include <cstdio>
 #include "model.h"
 
-Frame::Frame() {
-
-}
-
-Frame::Frame(const Frame& rhs)
+Frame::Frame(unsigned short _pins, unsigned int _time)
+    : pins(_pins), time(_time)
 {
-	memcpy(points, rhs.points, Frame::N_POINTS);
 }
 
-Frame& Frame::operator=(const Frame& rhs)
+
+Model::Model()
 {
-  if (this == &rhs)
-    return *this;
-
-  memcpy(points, rhs.points, Frame::N_POINTS);
-
-  return *this;
-}
-
-
-Model::Model() {
 	current = frames.begin();
 }
 
-void Model::blank() {
+void Model::blank()
+{
 	frames.clear();
 	current = frames.begin();
+
+    insertBlankFrame();
 }
 
-void Model::insertFrame() {
-	Frame frame;
+void Model::insertBlankFrame()
+{
+	Frame frame(0x00, 100);
 	current = frames.insert(current, frame);
 }
 
