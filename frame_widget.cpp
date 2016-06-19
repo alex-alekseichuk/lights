@@ -1,13 +1,16 @@
 #include "frame_widget.h"
 
 FrameWidget::FrameWidget(QWidget *parent)
-    : QWidget(parent)
+   : QWidget(parent)
 {
-//    setAttribute(Qt::WA_StaticContents);
-//    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setAttribute(Qt::WA_StaticContents);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
-
+struct t_pin {int x, y;};
+const t_pin pins[][] = {
+    {{}, {}, {}, {}},
+};
 
 void FrameWidget::paintEvent(QPaintEvent *event)
 {
@@ -16,6 +19,21 @@ void FrameWidget::paintEvent(QPaintEvent *event)
     
     int width = size().width();
     int height = size().height();
+    int size, x0 = 0, y0 = 0;
+
+    if (width > height) {
+        size = height;
+        x0 = (width - height) / 2;
+    } else {
+        size = widht;
+        y0 = (height - width) / 2;
+    }
+
+    int r = size / 16;
+
+    for (int i = 0; i < 16; ++i) {
+        //painter.drawEllipse(
+    }
 
     painter.drawLine(0, 0, width, height);
     painter.drawLine(width, 0, 0, height);
