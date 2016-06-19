@@ -1,27 +1,24 @@
-#include <QtGlobal>
-#if QT_VERSION >= 0x050000
-#include <QtWidgets>
-#else
-#include <QtGui>
-#endif
-
 #include "frame_widget.h"
-
 
 FrameWidget::FrameWidget(QWidget *parent)
     : QWidget(parent)
 {
-    setAttribute(Qt::WA_StaticContents);
-    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+//    setAttribute(Qt::WA_StaticContents);
+//    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
 
 
-void IconEditor::paintEvent(QPaintEvent *event)
+void FrameWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setPen(palette().foreground().color());
-    painter.drawLine(0, 0, 100, 100);
+    
+    int width = size().width();
+    int height = size().height();
+
+    painter.drawLine(0, 0, width, height);
+    painter.drawLine(width, 0, 0, height);
 
     /*
     if (zoom >= 3) {

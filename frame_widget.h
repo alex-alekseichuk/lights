@@ -1,14 +1,19 @@
 #ifndef __FRAME_WIDGET_H__
 #define __FRAME_WIDGET_H__
 
-#include <QWidget>
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
 
-class FrameWidget : QWidget
+class FrameWidget : public QWidget
 {
 public:
     FrameWidget(QWidget *parent = 0);
 protected:
-    void IconEditor::paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif

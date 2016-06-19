@@ -5,7 +5,10 @@
 #include <QtGui>
 #endif
 
+//#include <HQBoxLayout>
+
 #include "main_window.h"
+#include "frame_widget.h"
 
 MainWindow::MainWindow() : model()
 {
@@ -16,7 +19,8 @@ MainWindow::MainWindow() : model()
 
 	setUnifiedTitleAndToolBarOnMac(true);
 
-    HQBoxLayout *layout = new HQBoxLayout();
+    FrameWidget *frameWidget = new FrameWidget(this);
+    setCentralWidget(frameWidget);
 
 }
 
