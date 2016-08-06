@@ -90,3 +90,7 @@ void FrameWidget::paintEvent(QPaintEvent *event)
     */
 }
 
+//void FrameWidget::updateCurrentFrame(const Frame& frame){
+
+//}
+
