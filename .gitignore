@@ -1,6 +1,9 @@
 lights
+lights.pro.user
 lights.app
 *.o
 moc_*
 qrc_*
 *.swp
+install
+Makefile.*

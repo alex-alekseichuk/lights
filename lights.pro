@@ -11,6 +11,8 @@ QT += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # Input
-HEADERS += main_window.h model.h frame_widget.h
-SOURCES += main.cpp main_window.cpp model.cpp frame_widget.cpp
+HEADERS += main_window.h model.h frame_widget.h \
+    frame.h
+SOURCES += main.cpp main_window.cpp model.cpp frame_widget.cpp \
+    frame.cpp
 RESOURCES += app.qrc
