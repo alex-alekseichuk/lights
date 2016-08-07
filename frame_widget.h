@@ -7,6 +7,9 @@
 #include <QtWidgets>
 #else
 #include <QtGui>
+#if !defined(Q_DECL_OVERRIDE)
+#define Q_DECL_OVERRIDE
+#endif
 #endif
 
 #include <QPoint>
@@ -25,6 +28,9 @@ public slots:
 protected:
     void paintEvent(QPaintEvent *event);
     void getCellsByIndex(const int index, QPoint cells[N_PARTS]);
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    //void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    //void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 private:
     Model& model;
 };

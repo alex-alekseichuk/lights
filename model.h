@@ -19,8 +19,9 @@ public:
     inline bool hasFrames() {
         return _current != _frames.end();
     }
+    void togglePin(int index);
 signals:
-   void currenFrameChanged();
+   void currentFrameChanged();
 private:
     Frames _frames;
     Frames::iterator _current;

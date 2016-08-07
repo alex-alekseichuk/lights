@@ -1,12 +1,13 @@
 #include "frame_widget.h"
 
 FrameWidget::FrameWidget(Model& model, QWidget *parent)
-    : model(model), QWidget(parent)
+    : QWidget(parent), model(model)
 {
 //    setAttribute(Qt::WA_StaticContents);
 //    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-    connect(&model, SIGNAL(currenFrameChanged()), this, SLOT(updateCurrentFrame()));
+    //connect(&model, SIGNAL(currentFrameChanged()), this, SLOT(updateCurrentFrame()));
+    connect(&model, SIGNAL(currentFrameChanged()), this, SLOT(repaint()));
 }
 
 void FrameWidget::getCellsByIndex(const int index, QPoint cells[N_PARTS]) {
@@ -77,31 +78,16 @@ void FrameWidget::paintEvent(QPaintEvent *event)
         }
     }
 
-    /*
-    if (zoom >= 3) {
-        painter.setPen(palette().foreground().color());
-        for (int i = 0; i <= image.width(); ++i)
-            painter.drawLine(zoom * i, 0,
-                    zoom * i, zoom * image.height());
-        for (int j = 0; j <= image.height(); ++j)
-            painter.drawLine(0, zoom * j,
-                    zoom * image.width(), zoom * j);
-    }
-    for (int i = 0; i < image.width(); ++i) {
-        for (int j = 0; j < image.height(); ++j) {
-            QRect rect = pixelRect(i, j);
-            if (!event->region().intersect(rect).isEmpty()) {
-                QColor color = QColor::fromRgba(image.pixel(i, j));
-                if (color.alpha() < 255)
-                    painter.fillRect(rect, Qt::white);
-                painter.fillRect(rect, color);
-            }
-        }
-    }
-    */
 }
 
 void FrameWidget::updateCurrentFrame(){
     repaint();
+}
+
+void FrameWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+
+    }
 }
 
