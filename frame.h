@@ -3,10 +3,12 @@
 
 class Frame {
 public:
-    Frame(unsigned short _pins, unsigned int _time);
+    Frame(unsigned int pins, unsigned int time);
+    inline int pins() {return _pins;}
+    inline int time() {return _time;}
 private:
-    unsigned short pins;
-    unsigned int time; // ms
+    unsigned int _pins;
+    unsigned int _time; // ms
 };
 
 #endif // FRAME_H

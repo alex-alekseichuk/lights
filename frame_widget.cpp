@@ -1,10 +1,12 @@
 #include "frame_widget.h"
 
-FrameWidget::FrameWidget(QWidget *parent)
-    : QWidget(parent)
+FrameWidget::FrameWidget(Model& model, QWidget *parent)
+    : model(model), QWidget(parent)
 {
 //    setAttribute(Qt::WA_StaticContents);
 //    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    connect(&model, SIGNAL(currenFrameChanged()), this, SLOT(updateCurrentFrame()));
 }
 
 void FrameWidget::getCellsByIndex(const int index, QPoint cells[N_PARTS]) {
@@ -26,6 +28,10 @@ void FrameWidget::getCellsByIndex(const int index, QPoint cells[N_PARTS]) {
 
 void FrameWidget::paintEvent(QPaintEvent *event)
 {
+    if (!model.hasFrames())
+        return;
+
+    int pins = model.current()->pins();
 
     QPainter painter(this);
     painter.setPen(palette().foreground().color());
@@ -49,17 +55,22 @@ void FrameWidget::paintEvent(QPaintEvent *event)
     int n = SIDE_SIZE * SIDE_SIZE;
     QPoint cells[N_PARTS];
     for (int i = 0; i < n; ++i) {
+        bool on = (0 != (pins & (1 << i)));
+
         getCellsByIndex(i, cells);
         for (int ic = 0; ic < N_PARTS; ++ic) {
 
-            int x = x0 + (MARGIN + r) * cells[ic].x();
-            int y = y0 + (MARGIN + r) * cells[ic].y();
+            int x = x0 + MARGIN + (MARGIN + r) * cells[ic].x();
+            int y = y0 + MARGIN + (MARGIN + r) * cells[ic].y();
 
-            painter.setPen(Qt::black);
-            painter.setBrush(Qt::NoBrush);
+            if (on) {
+                painter.setPen(Qt::NoPen);
+                painter.setBrush(Qt::red);
+            } else {
+                painter.setPen(Qt::black);
+                painter.setBrush(Qt::NoBrush);
+            }
 
-        //        painter.setPen(Qt::NoPen);
-        //        painter.setBrush(Qt::red);
 
             painter.drawEllipse(x, y, r, r);
 
@@ -90,7 +101,7 @@ void FrameWidget::paintEvent(QPaintEvent *event)
     */
 }
 
-void FrameWidget::updateCurrentFrame(const Frame& frame){
-
+void FrameWidget::updateCurrentFrame(){
+    repaint();
 }
 

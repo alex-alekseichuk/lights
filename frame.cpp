@@ -1,6 +1,6 @@
 #include "frame.h"
 
-Frame::Frame(unsigned short _pins, unsigned int _time)
-    : pins(_pins), time(_time)
+Frame::Frame(unsigned int pins, unsigned int time)
+    : _pins(pins), _time(time)
 {
 }

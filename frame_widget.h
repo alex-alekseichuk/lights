@@ -10,19 +10,23 @@
 #endif
 
 #include <QPoint>
+#include "frame.h"
 #include "model.h"
 
 class FrameWidget : public QWidget
 {
+    Q_OBJECT
 public:
-    FrameWidget(QWidget *parent = 0);
+    FrameWidget(Model& model, QWidget *parent = 0);
     static const int SIDE_SIZE = 4;
     static const int N_PARTS = 4;
 public slots:
-    void updateCurrentFrame(const Frame& frame);
+    void updateCurrentFrame();
 protected:
     void paintEvent(QPaintEvent *event);
     void getCellsByIndex(const int index, QPoint cells[N_PARTS]);
+private:
+    Model& model;
 };
 
 #endif
