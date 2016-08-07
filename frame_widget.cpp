@@ -1,16 +1,15 @@
 #include "frame_widget.h"
 
-FrameWidget::FrameWidget(Model& model, QWidget *parent)
+FrameWidget::FrameWidget(Model *model, QWidget *parent)
     : QWidget(parent), model(model)
 {
 //    setAttribute(Qt::WA_StaticContents);
 //    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-    //connect(&model, SIGNAL(currentFrameChanged()), this, SLOT(updateCurrentFrame()));
-    connect(&model, SIGNAL(currentFrameChanged()), this, SLOT(repaint()));
+    connect(model, SIGNAL(currentFrameChanged()), this, SLOT(repaint()));
 }
 
-void FrameWidget::getCellsByIndex(const int index, QPoint cells[N_PARTS]) {
+void FrameWidget::cellsOfIndex(const int index, QPoint cells[N_PARTS]) {
     int ix = 1 + (index % SIDE_SIZE);
     int iy = 1 + (index / SIDE_SIZE);
 
@@ -29,10 +28,10 @@ void FrameWidget::getCellsByIndex(const int index, QPoint cells[N_PARTS]) {
 
 void FrameWidget::paintEvent(QPaintEvent *event)
 {
-    if (!model.hasFrames())
+    if (!model->hasFrames())
         return;
 
-    int pins = model.current()->pins();
+    int pins = model->current()->pins();
 
     QPainter painter(this);
     painter.setPen(palette().foreground().color());
@@ -40,7 +39,6 @@ void FrameWidget::paintEvent(QPaintEvent *event)
     int width = size().width();
     int height = size().height();
 
-    int len, x0, y0;
     if (width > height) {
         len = height;
         x0 = (width - height) / 2;
@@ -50,15 +48,14 @@ void FrameWidget::paintEvent(QPaintEvent *event)
         x0 = 0;
         y0 = (height - width) / 2;
     }
-    const int MARGIN = 3;
-    int r = (len - MARGIN * (1 + 2 * SIDE_SIZE)) / (2 * SIDE_SIZE);
+    r = (len - MARGIN * (1 + 2 * SIDE_SIZE)) / (2 * SIDE_SIZE);
 
     int n = SIDE_SIZE * SIDE_SIZE;
     QPoint cells[N_PARTS];
     for (int i = 0; i < n; ++i) {
         bool on = (0 != (pins & (1 << i)));
 
-        getCellsByIndex(i, cells);
+        cellsOfIndex(i, cells);
         for (int ic = 0; ic < N_PARTS; ++ic) {
 
             int x = x0 + MARGIN + (MARGIN + r) * cells[ic].x();
@@ -84,10 +81,42 @@ void FrameWidget::updateCurrentFrame(){
     repaint();
 }
 
+
+
 void FrameWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
+        int x = event->x();
+        int y = event->y();
 
+        if (x < x0 || y < y0 || x >= x0 + len || y >= y0 + len)
+            return;
+
+        int jx = ((x-x0)-(MARGIN/2)) / (r + MARGIN);
+        if (jx >= SIDE_SIZE * 2)
+            return;
+        int jy = ((y-y0)-(MARGIN/2)) / (r + MARGIN);
+        if (jy >= SIDE_SIZE * 2)
+            return;
+
+        int index = indexOfCell(jx, jy);
+
+        model->togglePin(index);
     }
 }
 
+int FrameWidget::indexOfCell(int x, int y) {
+    if (x < SIDE_SIZE && y < SIDE_SIZE) {
+        return (SIDE_SIZE-x-1) * SIDE_SIZE + (SIDE_SIZE - y - 1);
+    }
+    if (x < SIDE_SIZE && y >= SIDE_SIZE) {
+        return (y - SIDE_SIZE) * SIDE_SIZE + (SIDE_SIZE - x - 1);
+    }
+    if (x >= SIDE_SIZE && y < SIDE_SIZE) {
+        return (SIDE_SIZE-y-1) * SIDE_SIZE + (x - SIDE_SIZE);
+    }
+    if (x >= SIDE_SIZE && y >= SIDE_SIZE) {
+        return (x - SIDE_SIZE) * SIDE_SIZE + (y - SIDE_SIZE);
+    }
+    return 0;
+}

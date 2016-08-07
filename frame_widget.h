@@ -20,19 +20,22 @@ class FrameWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FrameWidget(Model& model, QWidget *parent = 0);
+    FrameWidget(Model *model, QWidget *parent = 0);
     static const int SIDE_SIZE = 4;
     static const int N_PARTS = 4;
+    static const int MARGIN = 3;
 public slots:
     void updateCurrentFrame();
 protected:
     void paintEvent(QPaintEvent *event);
-    void getCellsByIndex(const int index, QPoint cells[N_PARTS]);
+    void cellsOfIndex(const int index, QPoint cells[N_PARTS]);
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     //void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     //void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    int indexOfCell(int x, int y);
 private:
-    Model& model;
+    Model *model;
+    int x0, y0, len, r;
 };
 
 #endif

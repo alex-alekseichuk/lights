@@ -19,9 +19,8 @@ MainWindow::MainWindow() : model()
 
 	setUnifiedTitleAndToolBarOnMac(true);
 
-    FrameWidget *frameWidget = new FrameWidget(model, this);
+    FrameWidget *frameWidget = new FrameWidget(&model, this);
     setCentralWidget(frameWidget);
-
 }
 
 void MainWindow::createActions() {
