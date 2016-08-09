@@ -5,6 +5,15 @@
     <file>images/save.png</file>
     <file>images/saveAs.png</file>
 
-    <file>images/plus.png</file>
+    <file>images/add.png</file>
+    <file>images/delete.png</file>
+
+    <file>images/first.png</file>
+    <file>images/prev.png</file>
+    <file>images/next.png</file>
+    <file>images/last.png</file>
+
+    <file>images/start.png</file>
+    <file>images/stop.png</file>
 </qresource>
 </RCC>

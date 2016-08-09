@@ -11,20 +11,38 @@ class Model: public QObject {
     Q_OBJECT
 public:
 	Model();
-	void blank();
-	void insertBlankFrame();
     inline Frames::iterator current() {
         return _current;
     }
     inline bool hasFrames() {
         return _current != _frames.end();
     }
+    inline int total() {
+        return _total;
+    }
+    inline int index() {
+        return _index;
+    }
+
+    void blank();
+    void addBlankFrame();
+    void deleteCurrentFrame();
+
     void togglePin(int index);
+
+    void goFirst();
+    void goPrev();
+    void goNext();
+    void goLast();
+
 signals:
    void currentFrameChanged();
 private:
+    void _init();
     Frames _frames;
     Frames::iterator _current;
+    int _total;
+    int _index;
 };
 
 #endif
