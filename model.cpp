@@ -1,9 +1,11 @@
 #include <cstring>
 #include <cstdio>
+#include <QTimer>
 #include "model.h"
 
 void Model::_init()
 {
+    _running = false;
     _frames.clear();
     _current = _frames.begin();
     _index = 0;
@@ -18,6 +20,8 @@ Model::Model()
 
 void Model::blank()
 {
+    if (_running)
+        return;
     _init();
     addBlankFrame();
 }
@@ -36,6 +40,8 @@ void Model::insertBlankFrame()
 
 void Model::addBlankFrame()
 {
+    if (_running)
+        return;
     Frame frame(0x00, 100);
     if (hasFrames()) {
         _current++;
@@ -47,6 +53,8 @@ void Model::addBlankFrame()
 }
 
 void Model::togglePin(int index) {
+    if (_running)
+        return;
     if (!hasFrames())
         return;
     _current->togglePin(index);
@@ -55,6 +63,8 @@ void Model::togglePin(int index) {
 
 void Model::deleteCurrentFrame()
 {
+    if (_running)
+        return;
     if (!hasFrames())
         return;
 
@@ -71,6 +81,8 @@ void Model::deleteCurrentFrame()
 
 void Model::goFirst()
 {
+    if (_running)
+        return;
     if (!hasFrames())
         return;
     if (_current == _frames.begin())
@@ -83,6 +95,8 @@ void Model::goFirst()
 
 void Model::goPrev()
 {
+    if (_running)
+        return;
     if (!hasFrames())
         return;
     if (_current == _frames.begin())
@@ -95,6 +109,8 @@ void Model::goPrev()
 
 void Model::goNext()
 {
+    if (_running)
+        return;
     if (!hasFrames())
         return;
     Frames::iterator next = _current;
@@ -108,6 +124,8 @@ void Model::goNext()
 
 void Model::goLast()
 {
+    if (_running)
+        return;
     if (!hasFrames())
         return;
     Frames::iterator next = _current;
@@ -120,3 +138,30 @@ void Model::goLast()
     emit currentFrameChanged();
 }
 
+void Model::frameTimeout() {
+    if (!_running)
+        return;
+
+    if (++_current == _frames.end()) {
+        _current = _frames.begin();
+        _index = 0;
+    } else {
+        _index++;
+    }
+    emit currentFrameChanged();
+    QTimer::singleShot(100, this, SLOT(frameTimeout()));
+}
+
+void Model::start() {
+    if (_running)
+        return;
+    if (!hasFrames())
+        return;
+
+    _running = true;
+    QTimer::singleShot(100, this, SLOT(frameTimeout()));
+}
+void Model::stop() {
+    if (_running)
+        _running = false;
+}

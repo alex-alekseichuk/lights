@@ -35,14 +35,19 @@ public:
     void goNext();
     void goLast();
 
+    void start();
+    void stop();
 signals:
    void currentFrameChanged();
+private slots:
+   void frameTimeout();
 private:
     void _init();
     Frames _frames;
     Frames::iterator _current;
     int _total;
     int _index;
+    bool _running;
 };
 
 #endif

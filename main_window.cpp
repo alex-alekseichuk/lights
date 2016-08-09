@@ -61,13 +61,13 @@ void MainWindow::createActions() {
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
     
     insertAct = new QAction(QIcon(":/images/add.png"), tr("&Add"), this);
-    insertAct->setShortcut(Qt::CTRL + Qt::Key_I);
+    insertAct->setShortcut(Qt::CTRL + Qt::Key_A);
     insertAct->setStatusTip(tr("Add a frame"));
     connect(insertAct, SIGNAL(triggered()), this, SLOT(addFrame()));
 
     deleteAct = new QAction(QIcon(":/images/delete.png"), tr("&Delete"), this);
     deleteAct->setShortcut(Qt::CTRL + Qt::Key_D);
-    deleteAct->setStatusTip(tr("Insert a frame"));
+    deleteAct->setStatusTip(tr("Delete current frame"));
     connect(deleteAct, SIGNAL(triggered()), this, SLOT(deleteFrame()));
 
     goFirstAct = new QAction(QIcon(":/images/first.png"), tr("Go &First"), this);
@@ -147,6 +147,8 @@ void MainWindow::createToolBars()
     QFont font;
     font.setPointSize(11);
     lblCurrent->setFont(font);
+    lblCurrent->setFixedWidth(100);
+    lblCurrent->setAlignment(Qt::AlignCenter);
     lblCurrent->setFrameStyle(QFrame::Panel | QFrame::Sunken);
 
     editToolBar->addAction(goNextAct);
@@ -196,7 +198,9 @@ void MainWindow::goLast() {
 }
 
 void MainWindow::start() {
+    model.start();
 }
 void MainWindow::stop() {
+    model.stop();
 }
 
