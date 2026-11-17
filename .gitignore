@@ -7,3 +7,5 @@ qrc_*
 *.swp
 install
 Makefile.*
+Makefile
+.qmake.stash

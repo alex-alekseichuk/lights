@@ -34,7 +34,7 @@ void FrameWidget::paintEvent(QPaintEvent *event)
     int pins = model->current()->pins();
 
     QPainter painter(this);
-    painter.setPen(palette().foreground().color());
+    painter.setPen(palette().color(QPalette::WindowText));
     
     int width = size().width();
     int height = size().height();
