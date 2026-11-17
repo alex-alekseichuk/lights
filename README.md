@@ -27,3 +27,4 @@ Run:
 ./lights
 ```
 
+![lights GUI](lights_gui.png)
